@@ -10,18 +10,19 @@ class App extends Component {
     images: [],
     page: 1,
   };
-  componentDidMount() {
-    this.renderImages();
-  }
+  onSubmit() {}
   renderImages() {
-    fetchImage('car', this.state.page).then(r => {
-      this.setState(prevState => ({ images: [...prevState.images, ...r] }));
+    const { page } = this.state;
+    fetchImage('car', page).then(({ data }) => {
+      this.setState(prevState => ({
+        images: [...prevState.images, ...data.hits],
+      }));
     });
   }
   render() {
     return (
       <>
-        <SearchBar />
+        <SearchBar onSubmit={this.onSubmit} />
         <ImageGallery images={this.state.images} />
         <Loader />
         <Button />
@@ -31,3 +32,4 @@ class App extends Component {
   }
 }
 export default App;
+fetchImage('car', 1).then(r => console.log(r));
