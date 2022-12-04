@@ -5,10 +5,17 @@ class SearchBar extends Component {
     imageName: '',
   };
 
-  handleSubmit(event) {
+  handleSubmit = event => {
     event.preventDefault();
+    if (this.state.imageName === '') {
+      alert('Введите имя.');
+      return;
+    }
+    console.log(this.state.imageName);
+
+    this.props.onSubmit(this.state.imageName);
     this.setState({ imageName: '' });
-  }
+  };
   handleNameChange = event => {
     this.setState({ imageName: event.target.value.toLowerCase() });
   };

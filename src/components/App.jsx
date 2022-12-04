@@ -9,11 +9,23 @@ class App extends Component {
   state = {
     images: [],
     page: 1,
+    imageName: '',
   };
-  onSubmit() {}
+  handleFormSubmit = imageName => {
+    this.setState({
+      imageName,
+      page: 1,
+      images: [],
+    });
+  };
+  componentDidUpdate(_, prevState) {
+    if (prevState.imageName !== this.state.imageName) {
+      this.renderImages();
+    }
+  }
   renderImages() {
-    const { page } = this.state;
-    fetchImage('car', page).then(({ data }) => {
+    const { page, imageName } = this.state;
+    fetchImage(imageName, page).then(({ data }) => {
       this.setState(prevState => ({
         images: [...prevState.images, ...data.hits],
       }));
@@ -22,7 +34,7 @@ class App extends Component {
   render() {
     return (
       <>
-        <SearchBar onSubmit={this.onSubmit} />
+        <SearchBar onSubmit={this.handleFormSubmit} />
         <ImageGallery images={this.state.images} />
         <Loader />
         <Button />
@@ -32,4 +44,3 @@ class App extends Component {
   }
 }
 export default App;
-fetchImage('car', 1).then(r => console.log(r));
