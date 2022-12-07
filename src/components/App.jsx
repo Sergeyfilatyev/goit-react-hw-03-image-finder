@@ -12,12 +12,15 @@ class App extends Component {
     imageName: '',
   };
   handleFormSubmit = imageName => {
-    this.setState({
-      imageName,
-      page: 1,
-      images: [],
-    });
+    if (imageName !== this.state.imageName) {
+      this.setState({
+        imageName,
+        page: 1,
+        images: [],
+      });
+    }
   };
+
   componentDidUpdate(_, prevState) {
     if (prevState.imageName !== this.state.imageName) {
       this.renderImages();
