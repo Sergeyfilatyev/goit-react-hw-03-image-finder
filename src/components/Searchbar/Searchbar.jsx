@@ -1,5 +1,5 @@
 import { Component } from 'react';
-
+import s from './Searchbar.module.css';
 class SearchBar extends Component {
   state = {
     imageName: '',
@@ -7,7 +7,7 @@ class SearchBar extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    if (this.state.imageName === '') {
+    if (this.state.imageName.trim() === '') {
       alert('Введите имя.');
       return;
     }
@@ -21,14 +21,17 @@ class SearchBar extends Component {
   };
   render() {
     return (
-      <header>
-        <form onSubmit={this.handleSubmit}>
-          <button type="submit">
-            <span>Search</span>
+      <header className={s.searchbar}>
+        <form className={s.searchForm} onSubmit={this.handleSubmit}>
+          <button className={s.searchFormButton} type="submit">
+            <span className={s.searchFormButtonLabel}>Search</span>
           </button>
 
           <input
+            className={s.searchFormInput}
             type="text"
+            autoComplete="off"
+            autoFocus
             name="imageName"
             value={this.state.imageName}
             onChange={this.handleNameChange}

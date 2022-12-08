@@ -7,13 +7,5 @@ function fetchImage(name, page) {
     `${API_URL}?key=${API_KEY}&q=${name}&image_type=photo&orientation=horizontal&page=${page}&per_page=12`
   );
 }
-// fetchImage('car', 5)
-//   .then(hits =>
-//     hits.map(({ id, webformatURL, largeImageURL }) => ({
-//       id,
-//       largeImageURL,
-//       webformatURL,
-//     }))
-//   )
-//   .then(console.log);
+
 export default fetchImage;
