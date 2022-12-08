@@ -1,5 +1,8 @@
 import { Component } from 'react';
 import s from './Searchbar.module.css';
+import { GoSearch } from 'react-icons/go';
+import { toast } from 'react-toastify';
+
 class SearchBar extends Component {
   state = {
     imageName: '',
@@ -8,7 +11,7 @@ class SearchBar extends Component {
   handleSubmit = event => {
     event.preventDefault();
     if (this.state.imageName.trim() === '') {
-      alert('Введите имя.');
+      toast.info('Enter your search image');
       return;
     }
     console.log(this.state.imageName);
@@ -24,7 +27,7 @@ class SearchBar extends Component {
       <header className={s.searchbar}>
         <form className={s.searchForm} onSubmit={this.handleSubmit}>
           <button className={s.searchFormButton} type="submit">
-            <span className={s.searchFormButtonLabel}>Search</span>
+            <GoSearch />
           </button>
 
           <input

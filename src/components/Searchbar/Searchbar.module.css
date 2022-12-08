@@ -42,10 +42,6 @@
   opacity: 1;
 }
 
-.searchFormButtonLabel {
-  color: black;
-}
-
 .searchFormInput {
   display: inline-block;
   width: 100%;

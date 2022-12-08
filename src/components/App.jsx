@@ -5,6 +5,10 @@ import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import Modal from './Modal/Modal';
 import fetchImage from 'services/imageApi';
+import s from './App.module.css';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Status = {
   IDLE: 'idle',
   PENDING: 'pending',
@@ -58,8 +62,9 @@ class App extends Component {
   };
   render() {
     const { status } = this.state;
+
     return (
-      <>
+      <div className={s.App}>
         <SearchBar onSubmit={this.handleFormSubmit} />
         {status === Status.IDLE && <p>Please enter your search</p>}
         {status === Status.PENDING && <Loader />}
@@ -69,7 +74,8 @@ class App extends Component {
             <Button onClick={this.nextPages} />
           </>
         )}
-      </>
+        <ToastContainer position="top-center" autoClose={3000} />
+      </div>
     );
   }
 }
