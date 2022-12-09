@@ -4,10 +4,12 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
 import Modal from './Modal/Modal';
+import ImagesErrorView from './ImagesErrorView/ImagesErrorView';
 import fetchImage from 'services/imageApi';
 import s from './App.module.css';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PropTypes from 'prop-types';
 
 const Status = {
   IDLE: 'idle',
@@ -21,22 +23,20 @@ class App extends Component {
     images: [],
     page: 1,
     imageName: '',
+    error: null,
+    totalPages: null,
     status: Status.IDLE,
   };
   handleFormSubmit = imageName => {
     if (imageName === this.state.imageName) {
-      this.setState({
-        imageName,
-        page: 1,
-        images: [...this.state.images],
-      });
-    } else {
-      this.setState({
-        imageName,
-        page: 1,
-        images: [],
-      });
+      toast.info(`Image ${imageName} already uploaded`);
+      return;
     }
+    this.setState({
+      imageName,
+      page: 1,
+      images: [],
+    });
   };
 
   componentDidUpdate(_, prevState) {
@@ -47,11 +47,18 @@ class App extends Component {
   }
   renderImages() {
     const { page, imageName } = this.state;
+
     fetchImage(imageName, page)
-      .then(({ data }) => {
+      .then(response => {
+        if (response.hits.length === 0) {
+          toast.warning(
+            `No images ${imageName} your search query. Please try again.`
+          );
+        }
         this.setState(prevState => ({
-          images: [...prevState.images, ...data.hits],
+          images: [...prevState.images, ...response.hits],
           page: prevState.page + 1,
+          totalPages: Math.ceil(response.totalHits / 12),
           status: Status.RESOLVED,
         }));
       })
@@ -61,18 +68,21 @@ class App extends Component {
     this.renderImages();
   };
   render() {
-    const { status } = this.state;
+    const { status, error, images, page, totalPages } = this.state;
 
     return (
       <div className={s.App}>
         <SearchBar onSubmit={this.handleFormSubmit} />
-        {status === Status.IDLE && <p>Please enter your search</p>}
+        {status === Status.IDLE && (
+          <p className={s.text}>Please enter your search</p>
+        )}
         {status === Status.PENDING && <Loader />}
-        {status === Status.RESOLVED && (
-          <>
-            <ImageGallery images={this.state.images} />
-            <Button onClick={this.nextPages} />
-          </>
+        {status === Status.RESOLVED && <ImageGallery images={images} />}
+        {status === Status.RESOLVED && page < totalPages && (
+          <Button onClick={this.nextPages} />
+        )}
+        {status === Status.REJECTED && (
+          <ImagesErrorView message={error.message} />
         )}
         <ToastContainer position="top-center" autoClose={3000} />
       </div>

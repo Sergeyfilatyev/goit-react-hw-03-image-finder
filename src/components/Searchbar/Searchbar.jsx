@@ -2,6 +2,7 @@ import { Component } from 'react';
 import s from './Searchbar.module.css';
 import { GoSearch } from 'react-icons/go';
 import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
 
 class SearchBar extends Component {
   state = {
@@ -14,7 +15,6 @@ class SearchBar extends Component {
       toast.info('Enter your search image');
       return;
     }
-    console.log(this.state.imageName);
 
     this.props.onSubmit(this.state.imageName);
     this.setState({ imageName: '' });

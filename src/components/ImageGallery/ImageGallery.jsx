@@ -1,5 +1,6 @@
 import ImageGalleryItem from 'components/ImageGalleryItem/ImageGalleryItem';
 import s from './ImageGallery.module.css';
+import PropTypes from 'prop-types';
 export function ImageGallery({ images }) {
   return (
     <ul className={s.imageGallery}>
