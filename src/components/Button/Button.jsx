@@ -7,3 +7,6 @@ export function Button({ onClick }) {
     </button>
   );
 }
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};

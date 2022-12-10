@@ -17,3 +17,6 @@ export function ImageGallery({ images }) {
     </ul>
   );
 }
+ImageGallery.propTypes = {
+  images: PropTypes.array.isRequired,
+};

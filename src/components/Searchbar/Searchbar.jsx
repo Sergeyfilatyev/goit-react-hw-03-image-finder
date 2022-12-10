@@ -8,6 +8,9 @@ class SearchBar extends Component {
   state = {
     imageName: '',
   };
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
+  };
 
   handleSubmit = event => {
     event.preventDefault();

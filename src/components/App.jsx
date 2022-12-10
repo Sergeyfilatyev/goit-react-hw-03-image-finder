@@ -3,7 +3,6 @@ import SearchBar from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Loader } from './Loader/Loader';
-import Modal from './Modal/Modal';
 import ImagesErrorView from './ImagesErrorView/ImagesErrorView';
 import fetchImage from 'services/imageApi';
 import s from './App.module.css';
