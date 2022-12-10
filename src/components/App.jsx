@@ -8,7 +8,7 @@ import fetchImage from 'services/imageApi';
 import s from './App.module.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PropTypes from 'prop-types';
+import { animateScroll as scroll } from 'react-scroll';
 
 const Status = {
   IDLE: 'idle',
@@ -67,6 +67,7 @@ class App extends Component {
   }
   nextPages = () => {
     this.renderImages();
+    scroll.scrollToBottom();
   };
   render() {
     const { status, error, images, page, totalPages } = this.state;
