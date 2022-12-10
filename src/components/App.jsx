@@ -53,6 +53,8 @@ class App extends Component {
           toast.warning(
             `No images ${imageName} your search query. Please try again.`
           );
+          this.setState({ status: Status.IDLE });
+          return;
         }
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
