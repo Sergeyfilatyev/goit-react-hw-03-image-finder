@@ -38,7 +38,10 @@ class App extends Component {
   };
 
   componentDidUpdate(_, prevState) {
-    if (prevState.imageName !== this.state.imageName) {
+    if (
+      prevState.imageName !== this.state.imageName ||
+      this.state.page !== prevState.page
+    ) {
       this.renderImages();
       this.setState({ status: Status.PENDING });
     }
@@ -57,7 +60,6 @@ class App extends Component {
         }
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
-          page: prevState.page + 1,
           totalPages: Math.ceil(response.totalHits / 12),
           status: Status.RESOLVED,
         }));
@@ -65,7 +67,9 @@ class App extends Component {
       .catch(error => this.setState({ error, status: Status.REJECTED }));
   }
   nextPages = () => {
-    this.renderImages();
+    this.setState(({ page }) => ({
+      page: page + 1,
+    }));
     scroll.scrollToBottom();
   };
   render() {
