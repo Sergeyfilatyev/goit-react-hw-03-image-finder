@@ -42,8 +42,8 @@ class App extends Component {
       prevState.imageName !== this.state.imageName ||
       this.state.page !== prevState.page
     ) {
-      this.renderImages();
       this.setState({ status: Status.PENDING });
+      this.renderImages();
     }
   }
   renderImages() {
